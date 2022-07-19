@@ -1,0 +1,20 @@
+.hide, .offscreen{
+    display: none;
+}
+.valid{
+    color: green;
+}
+.invalid{
+    color: red
+}
+
+.instructions{
+    color: rgb(3, 49, 232)
+}
+.formRegister{
+    display: flex;
+    flex-direction: column;
+    margin: 10%;
+    align-items: center;
+    justify-content: center;
+}
