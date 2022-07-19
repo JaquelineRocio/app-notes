@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Register/register.css'
+import axios from '../api/axios'
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,24}$/;
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
+const REGISTER_URL = '/register';
 
 const Register=()=> {
     const userRef = useRef();
@@ -17,7 +19,7 @@ const Register=()=> {
 
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
-    const [emailFocus, setEmailFocus] = useState(false);
+
 
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -37,20 +39,14 @@ const Register=()=> {
 
   useEffect(()=>{
     const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
     setValidName(result);
   }, [user])
   useEffect(()=>{
     const result = EMAIL_REGEX.test(email);
-    console.log(result);
-    console.log(email);
     setValidEmail(result);
   }, [email])
   useEffect(()=>{
     const result = PWD_REGEX.test(pwd);
-    console.log(result);
-    console.log(pwd);
     setValidPwd(result);
     const match = pwd===matchPwd;
     setValidMatch(match);
@@ -72,9 +68,25 @@ const Register=()=> {
         setErrMsg("Invalid Entry");
         return;
     }
-
-
-  }
+    try {
+        const response = await axios.post(String(REGISTER_URL), JSON.stringify({username: user, email: email, password: pwd, repassword: matchPwd}), 
+        {
+            headers: {'Content-Type': 'application/json'}
+        }
+        );
+        setSuccess(true);
+    } catch (error) {
+        console.log(error.response.status)
+        if(error.response.status === 400)
+        {
+            setErrMsg(error.response.data.error)
+        }
+        else
+        {
+            setErrMsg(error.response.data)
+        }
+    } 
+    }
     return (
             <>
             {success ? (
@@ -138,8 +150,7 @@ const Register=()=> {
                 required
                 aria-invalid = {validEmail?"false": "true"}
                 aria-describedby = "emailnote"
-                onFocus={()=>setEmailFocus(true)}
-                onBlur={()=>setEmailFocus(false)} />
+               />
 
             <label htmlFor="password">
                 Contraseña:
