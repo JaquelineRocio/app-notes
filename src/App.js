@@ -1,6 +1,7 @@
 import './App.css';
 import Login from './components/Login/Login';
 import { Routes, Route } from 'react-router-dom'; 
+import Layout from './components/Layout/layout';
 
 function App() {
   
