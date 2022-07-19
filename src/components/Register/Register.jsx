@@ -74,6 +74,9 @@ const Register=()=> {
             headers: {'Content-Type': 'application/json'}
         }
         );
+        setEmail('');
+        setPwd('');
+        setUser('');
         setSuccess(true);
     } catch (error) {
 
