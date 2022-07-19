@@ -1,7 +1,5 @@
-
-import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
-import { Register } from './components/Register.jsx';
+import Register from './components/Register/Register';
 
 function App() {
 

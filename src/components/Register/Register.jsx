@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './Register/register.css'
-import axios from '../api/axios'
+import './register.css'
+import axios from '../../api/axios'
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,24}$/;
@@ -76,7 +76,7 @@ const Register=()=> {
         );
         setSuccess(true);
     } catch (error) {
-        console.log(error.response.status)
+
         if(error.response.status === 400)
         {
             setErrMsg(error.response.data.error)
